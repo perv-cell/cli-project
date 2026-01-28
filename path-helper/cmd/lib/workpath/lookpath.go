@@ -2,6 +2,7 @@ package workpath
 
 import (
 	"fmt"
+	"strings"
 
 	"golang.org/x/sys/windows/registry"
 )
@@ -9,7 +10,7 @@ import (
 func LookPATHenvirenment() error {
 	key, err := registry.OpenKey(
 		registry.CURRENT_USER,
-		`Envirenment`,
+		`Environment`,
 		registry.ALL_ACCESS,
 	)
 	if err != nil {
@@ -23,7 +24,10 @@ func LookPATHenvirenment() error {
 		return err
 	}
 
-	fmt.Printf("PATH = %s", PATH)
+	for _, p := range strings.Split(PATH, ";") {
+		fmt.Println("---------------------------------------------------")
+		fmt.Println(p)
+	}
 
 	return nil
 }
