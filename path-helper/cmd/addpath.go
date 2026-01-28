@@ -5,7 +5,6 @@ package cmd
 
 import (
 	"fmt"
-	"runtime"
 
 	"github.com/perv-cell/cli-project/path-helper/cmd/lib/workpath"
 	"github.com/spf13/cobra"
@@ -28,27 +27,17 @@ Adding it to the PATH will complete this task.`,
 			fmt.Println(args)
 			return
 		}
-		path := args[0]
+		var path string
+		if len(args) >= 1 {
+			path = args[0]
+		}
 
 		_const, _ := cmd.Flags().GetBool("const")
 		if _const {
-			os := runtime.GOOS
-			switch os {
-
-			case "windows":
-				err := workpath.AddUserPathInPATH(path)
-				if err != nil {
-					fmt.Println("Error read PATH user:", err)
-				}
-
-			case "linux":
-				fmt.Println("Запущено на Linux")
-
-			case "darwin":
-				fmt.Println("Запущено на macOS (Darwin)")
-
-			default:
-				fmt.Printf("Другая ОС: %s\n", os)
+			err := workpath.AddUserPathInPATH(path)
+			if err != nil {
+				fmt.Println("Error read PATH user:", err)
+				return
 			}
 
 			fmt.Println("The path has been successfully added to the system variable. 😏")

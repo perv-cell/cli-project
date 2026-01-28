@@ -5,7 +5,6 @@ package cmd
 
 import (
 	"fmt"
-	"runtime"
 
 	"github.com/perv-cell/cli-project/path-helper/cmd/lib/workpath"
 	"github.com/spf13/cobra"
@@ -28,23 +27,9 @@ of working with the system environment.`,
 
 		_const, _ := cmd.Flags().GetBool("const")
 		if _const {
-			os := runtime.GOOS
-			switch os {
-
-			case "windows":
-				err := workpath.RemoveUserPathInPATH(path)
-				if err != nil {
-					fmt.Println(err)
-				}
-
-			case "linux":
-				fmt.Println("Запущено на Linux")
-
-			case "darwin":
-				fmt.Println("Запущено на macOS (Darwin)")
-
-			default:
-				fmt.Printf("Другая ОС: %s\n", os)
+			err := workpath.RemoveUserPathInPATH(path)
+			if err != nil {
+				fmt.Println(err)
 			}
 
 			fmt.Println("the path was successfully deleted 🙃")

@@ -5,7 +5,6 @@ package cmd
 
 import (
 	"fmt"
-	"runtime"
 
 	"github.com/perv-cell/cli-project/path-helper/cmd/lib/workpath"
 	"github.com/spf13/cobra"
@@ -21,22 +20,9 @@ var lookPATHCmd = &cobra.Command{
 			fmt.Println("To run this command, specify the path you want to add to PATH as the only argument.")
 			return
 		}
-		os := runtime.GOOS
-		switch os {
-		case "windows":
-			err := workpath.LookPATHenvirenment()
-			if err != nil {
-				fmt.Println(err)
-			}
-
-		case "linux":
-			fmt.Println("Запущено на Linux")
-
-		case "darwin":
-			fmt.Println("Запущено на macOS (Darwin)")
-
-		default:
-			fmt.Printf("Другая ОС: %s\n", os)
+		err := workpath.LookPATHenvirenment()
+		if err != nil {
+			fmt.Println(err)
 		}
 	},
 }
