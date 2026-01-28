@@ -1,40 +1,47 @@
 /*
 Copyright © 2026 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
 import (
 	"fmt"
+	"runtime"
 
+	"github.com/perv-cell/cli-project/path-helper/cmd/lib/workpath"
 	"github.com/spf13/cobra"
 )
 
 // lookPATHCmd represents the lookPATH command
 var lookPATHCmd = &cobra.Command{
-	Use:   "lookPATH",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Use:   "lookpath",
+	Short: "look in our PATH",
+	Long:  `allows you to view the contents of the PATH`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("lookPATH called")
+		if len(args) > 1 {
+			fmt.Println("To run this command, specify the path you want to add to PATH as the only argument.")
+			return
+		}
+		os := runtime.GOOS
+		switch os {
+		case "windows":
+			err := workpath.LookPATHenvirenment()
+			if err != nil {
+				fmt.Println(err)
+			}
+
+		case "linux":
+			fmt.Println("Запущено на Linux")
+
+		case "darwin":
+			fmt.Println("Запущено на macOS (Darwin)")
+
+		default:
+			fmt.Printf("Другая ОС: %s\n", os)
+		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(lookPATHCmd)
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// lookPATHCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// lookPATHCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
