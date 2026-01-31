@@ -63,7 +63,7 @@ func LookPATHenvirenment() error {
 	return nil
 }
 
-func RemoveUserPathInPATH(path string) error {
+func RemoveUserPathInPath(path string) error {
 	key, err := registry.OpenKey(
 		registry.CURRENT_USER,
 		`Environment`,

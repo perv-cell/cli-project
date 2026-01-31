@@ -29,5 +29,5 @@ var lookPATHCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(lookPATHCmd)
-
+	lookPATHCmd.GroupID = "path"
 }

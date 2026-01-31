@@ -30,27 +30,20 @@ Adding it to the PATH will complete this task.`,
 		var path string
 		if len(args) >= 1 {
 			path = args[0]
+			fmt.Println(args[0])
 		}
 
-		_const, _ := cmd.Flags().GetBool("const")
-		if _const {
-			err := workpath.AddUserPathInPATH(path)
-			if err != nil {
-				fmt.Println("Error read PATH user:", err)
-				return
-			}
-
-			fmt.Println("The path has been successfully added to the system variable. 😏")
-		} else {
-
-			fmt.Println("The path is temporarily added to PATH 😏")
+		err := workpath.AddUserPathInPATH(path)
+		if err != nil {
+			fmt.Println("Error read PATH user:", err)
+			return
 		}
+
+		fmt.Println("The path has been successfully added to the system variable. 😏")
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(addpathCmd)
-
-	addpathCmd.Flags().BoolP("const", "c", false, "adds the PATH variable to your system configuration.")
-	addpathCmd.Flags().BoolP("temp", "t", true, "adds to PATH while the terminal is running")
+	addpathCmd.GroupID = "path"
 }

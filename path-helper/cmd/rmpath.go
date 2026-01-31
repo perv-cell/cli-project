@@ -25,24 +25,16 @@ of working with the system environment.`,
 		}
 		path := args[0]
 
-		_const, _ := cmd.Flags().GetBool("const")
-		if _const {
-			err := workpath.RemoveUserPathInPATH(path)
-			if err != nil {
-				fmt.Println(err)
-			}
-
-			fmt.Println("the path was successfully deleted 🙃")
-		} else {
-
-			fmt.Println("the path was successfully deleted 🙃")
+		err := workpath.RemoveUserPathInPath(path)
+		if err != nil {
+			fmt.Println(err)
 		}
+
+		fmt.Println("the path was successfully deleted 🙃")
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(rmpathCmd)
-
-	rmpathCmd.Flags().BoolP("temp", "t", false, "Help message for toggle")
-	rmpathCmd.Flags().BoolP("const", "c", false, "Help message for toggle")
+	rmpathCmd.GroupID = "path"
 }
